@@ -2,6 +2,7 @@ import pylab as pb
 import random
 import numpy as np
 from matplotlib import pyplot as plt
+import scipy as sp
 
 ### MEASURING COVARIANCE ###
 def compute_deviation_vector(vals):
@@ -30,7 +31,7 @@ plt.xlabel('Page Render Time \n Coveriance = {c}'.format(c=covariance(pageRender
 plt.ylabel('purchase amount')
 plt.grid()
 plt.scatter(pageRenderTime, purchaseAmount)
-plt.show()
+#plt.show()
 
 ## using numpy to calculate correlation and covariance:
 
@@ -48,4 +49,10 @@ print covariance(pageRenderTime, purchaseAmount)
 ## DATA MODELING AND CURVE FITTING ##
 
 
-
+hours = np.array([1,2,3,4,5,6,7,8,9,10,11,12])
+requests = np.array([2272, 1386, 1365, 1488, 1337, 1883, 
+            2283, 1335, 1025, 1139, 1447, 1203])
+if sp.sum(sp.isnan(requests)) > 0:
+	print "nans found"
+	requests = requests[~sp.isnan(requests)]
+	hours = hours[~sp.isnan(requests)]
