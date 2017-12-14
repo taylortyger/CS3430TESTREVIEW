@@ -76,6 +76,36 @@ Go to step one and repeat.
 This method hopefully minimizes overfitting and underfitting.
 '''
 
+import numpy as np
+import matplotlib.pyplot as plt
+pageRenderTime = np.random.normal(3.0,1.0,100)
+purchaseAmount = np.random.normal(50.0,10.0,100)
 
+## Train and Test Data Split (80/20)
+trainPageTime = pageRenderTime[:80]
+trainPageTime = np.array(trainPageTime)
+testPageTime = pageRenderTime[80:]
+testPageTime = np.array(testPageTime)
+trainPurchaseAmount = purchaseAmount[:80]
+trainPurchaseAmount = np.array(trainPurchaseAmount)
+testPurchaseAmount = purchaseAmount[80:]
+testPurchaseAmount = np.array(testPurchaseAmount)
 
+#Fit line to training data:
+trained_model = np.poly1d(np.polyfit(trainPageTime, trainPurchaseAmount, 8))
+
+t = np.linspace(0,7,100)
+
+fig1 = plt.figure(1)
+fig1.suptitle('Page Render Time vs Purchase Amount')
+plt.xlabel('Page Render Time')
+plt.ylabel('Purchase Amount')
+plt.grid()
+ax = plt.axes()
+ax.set_xlim([0,7])
+ax.set_ylim([0,100])
+plt.scatter(pageRenderTime, purchaseAmount)
+plt.scatter(trainPageTime, trainPurchaseAmount, color='r')
+plt.plot(t, trained_model(t), c='g')
+plt.show()
 
